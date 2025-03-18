@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "317341897487",
+    "project_id": "tasknotify-fb213",
+    "storage_bucket": "tasknotify-fb213.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:317341897487:android:0adca8f962757561d7247a",
+        "android_client_info": {
+          "package_name": "com.example.pushnotificationsapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpgkDPJK2TNsW-FI5Quw77EcT_viJokzw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
