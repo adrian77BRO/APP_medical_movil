@@ -6,5 +6,4 @@ data class Appointment(
     val observations: String,
     val status: Int,
     val id_job: Int,
-    val id_user: Int
 )

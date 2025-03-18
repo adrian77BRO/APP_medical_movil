@@ -13,8 +13,8 @@ import kotlinx.coroutines.launch
 class JobsViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = JobsRepository(TokenManager(application))
 
-    private val _servicesState = MutableLiveData<JobState>(JobState.Idle)
-    val servicesState: LiveData<JobState> = _servicesState
+    private val _jobsState = MutableLiveData<JobState>(JobState.Idle)
+    val jobsState: LiveData<JobState> = _jobsState
 
     init {
         fetchJobs()
@@ -22,12 +22,12 @@ class JobsViewModel(application: Application) : AndroidViewModel(application) {
 
     fun fetchJobs() {
         viewModelScope.launch {
-            _servicesState.value = JobState.Loading
+            _jobsState.value = JobState.Loading
             try {
                 val response = repository.getJobs()
-                _servicesState.value = JobState.Success(response.jobs)
+                _jobsState.value = JobState.Success(response.jobs)
             } catch (e: Exception) {
-                _servicesState.value = JobState.Error(e.message ?: "Error desconocido")
+                _jobsState.value = JobState.Error(e.message ?: "Error desconocido")
             }
         }
     }

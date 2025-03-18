@@ -12,13 +12,13 @@ import retrofit2.http.Path
 
 interface AppointmentService {
 
-    @GET("appointments/{job}")
+    @GET("appoints/{job}")
     suspend fun getAppointmentsByJob(
         @Header("Authorization") token: String,
         @Path("job") idJob: Int
     ): Response<AppointmentsDTO>
 
-    @POST("appointments")
+    @POST("appoints")
     suspend fun createAppointment(
         @Header("Authorization") token: String,
         @Body appointment: AppointmentRequest

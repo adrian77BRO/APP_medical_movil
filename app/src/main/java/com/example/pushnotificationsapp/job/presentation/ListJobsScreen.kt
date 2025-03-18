@@ -16,12 +16,12 @@ import com.example.pushnotificationsapp.job.data.models.JobState
 
 @Composable
 fun ListJobsScreen(
-    onNavigateToHistory: (serviceId: Int) -> Unit,
+    onNavigateToHistory: (idJob: Int) -> Unit,
     viewModel: JobsViewModel = viewModel()
 ) {
-    val servicesState by viewModel.servicesState.observeAsState(JobState.Idle)
+    val jobsState by viewModel.jobsState.observeAsState(JobState.Idle)
 
-    when (servicesState) {
+    when (jobsState) {
         is JobState.Loading -> {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 CircularProgressIndicator()
@@ -29,11 +29,11 @@ fun ListJobsScreen(
         }
         is JobState.Error -> {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text(text = (servicesState as JobState.Error).message)
+                Text(text = (jobsState as JobState.Error).message)
             }
         }
         is JobState.Success -> {
-            val jobs = (servicesState as JobState.Success).jobs
+            val jobs = (jobsState as JobState.Success).jobs
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
