@@ -3,6 +3,7 @@ package com.example.pushnotificationsapp.core.network
 import com.example.pushnotificationsapp.login.data.datasource.LoginService
 import com.example.pushnotificationsapp.register.data.datasource.RegisterService
 import com.example.pushnotificationsapp.appointment.data.datasource.AppointmentService
+import com.example.pushnotificationsapp.job.data.datasource.JobService
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -31,6 +32,10 @@ object RetrofitHelper {
 
     val registerService: RegisterService by lazy {
         instance.create(RegisterService::class.java)
+    }
+
+    val jobService: JobService by lazy {
+        instance.create(JobService::class.java)
     }
 
     val appointmentService: AppointmentService by lazy {
