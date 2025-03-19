@@ -13,8 +13,8 @@ import kotlinx.coroutines.launch
 class AppointmentViewModel(application: Application, private val idJob: Int) : AndroidViewModel(application) {
     private val repository = AppointmentRepository(TokenManager(application))
 
-    private val _appointmentsState = MutableLiveData<AppointmentState>(AppointmentState.Idle)
-    val appointmentsState: LiveData<AppointmentState> = _appointmentsState
+    private val _appointmentState = MutableLiveData<AppointmentState>(AppointmentState.Idle)
+    val appointmentState: LiveData<AppointmentState> = _appointmentState
 
     init {
         fetchAppointments()
@@ -22,12 +22,24 @@ class AppointmentViewModel(application: Application, private val idJob: Int) : A
 
     fun fetchAppointments() {
         viewModelScope.launch {
-            _appointmentsState.value = AppointmentState.Loading
+            _appointmentState.value = AppointmentState.Loading
             try {
                 val response = repository.getAppointments(idJob)
-                _appointmentsState.value = AppointmentState.Success(response.appointments)
+                _appointmentState.value = AppointmentState.Success(response.appointments)
             } catch (e: Exception) {
-                _appointmentsState.value = AppointmentState.Error(e.message ?: "Error desconocido")
+                _appointmentState.value = AppointmentState.Error(e.message ?: "Error desconocido")
+            }
+        }
+    }
+
+    fun reserve(date: String, observations: String) {
+        viewModelScope.launch {
+            _appointmentState.value = AppointmentState.Loading
+            try {
+                val response = repository.reserveAppointment(idJob, date, observations)
+                _appointmentState.value = AppointmentState.SuccessForm(response.message)
+            } catch (e: Exception) {
+                _appointmentState.value = AppointmentState.Error(e.message ?: "Error desconocido")
             }
         }
     }

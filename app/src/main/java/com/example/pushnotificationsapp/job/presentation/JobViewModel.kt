@@ -7,11 +7,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.pushnotificationsapp.core.storage.TokenManager
 import com.example.pushnotificationsapp.job.data.models.JobState
-import com.example.pushnotificationsapp.job.data.repository.JobsRepository
+import com.example.pushnotificationsapp.job.data.repository.JobRepository
 import kotlinx.coroutines.launch
 
-class JobsViewModel(application: Application) : AndroidViewModel(application) {
-    private val repository = JobsRepository(TokenManager(application))
+class JobViewModel(application: Application) : AndroidViewModel(application) {
+    private val repository = JobRepository(TokenManager(application))
 
     private val _jobsState = MutableLiveData<JobState>(JobState.Idle)
     val jobsState: LiveData<JobState> = _jobsState

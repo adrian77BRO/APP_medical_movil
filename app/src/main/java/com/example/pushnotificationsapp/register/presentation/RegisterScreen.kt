@@ -18,7 +18,7 @@ fun RegisterScreen(
     onNavigateBack: () -> Unit,
     viewModel: RegisterViewModel = viewModel()
 ) {
-    val customGreen = Color(0xFF4CAF50)
+    val customGreen = Color(0xFF3ECF72)
 
     val fname by viewModel.fname.observeAsState("")
     val lname by viewModel.lname.observeAsState("")

@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.pushnotificationsapp.appointment.presentation.FormScreen
 import com.example.pushnotificationsapp.appointment.presentation.HistoryScreen
 import com.example.pushnotificationsapp.job.presentation.ListJobsScreen
 import com.example.pushnotificationsapp.login.presentation.LoginScreen
@@ -32,8 +33,23 @@ fun AppNavigation(navController: NavHostController = rememberNavController()) {
             })
         }
         composable("history/{idJob}") { backStackEntry ->
-            val idJob = backStackEntry.arguments?.getString("idJob")?.toIntOrNull()
-            HistoryScreen(idJob = idJob ?: 0)
+            val idJob = backStackEntry.arguments?.getString("idJob")?.toIntOrNull() ?: 0
+            HistoryScreen(
+                idJob = idJob,
+                onNavigateToReservation = { id ->
+                    navController.navigate("reserve/$id")
+                }
+            )
+        }
+        composable("reserve/{idJob}") { backStackEntry ->
+            val idJob = backStackEntry.arguments?.getString("idJob")?.toIntOrNull() ?: 0
+            FormScreen(
+                idJob = idJob,
+                onReservationSuccess = {
+                    navController.popBackStack()
+                },
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
     }
 }

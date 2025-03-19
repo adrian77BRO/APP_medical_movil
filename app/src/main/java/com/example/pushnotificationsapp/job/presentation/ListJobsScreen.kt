@@ -17,7 +17,7 @@ import com.example.pushnotificationsapp.job.data.models.JobState
 @Composable
 fun ListJobsScreen(
     onNavigateToHistory: (idJob: Int) -> Unit,
-    viewModel: JobsViewModel = viewModel()
+    viewModel: JobViewModel = viewModel()
 ) {
     val jobsState by viewModel.jobsState.observeAsState(JobState.Idle)
 

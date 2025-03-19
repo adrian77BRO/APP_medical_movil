@@ -10,11 +10,8 @@ import com.example.pushnotificationsapp.ui.theme.PushNotificationsAppTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        //getFirebaseToken()
         setContent {
             PushNotificationsAppTheme {
-                //val navController = rememberNavController()
                 AppNavigation()
             }
         }
