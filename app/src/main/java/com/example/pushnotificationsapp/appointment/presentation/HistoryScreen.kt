@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pushnotificationsapp.appointment.data.models.AppointmentState
 import java.text.SimpleDateFormat
@@ -57,7 +58,12 @@ fun HistoryScreen(
                     val appointments = (appointmentState as AppointmentState.Success).appointments
                     if (appointments.isEmpty()) {
                         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                            Text(text = "No hay citas reservadas")
+                            Text(
+                                text = "No hay citas reservadas",
+                                color = Color(0xFF777777),
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Bold
+                            )
                         }
                     } else {
                         LazyColumn(

@@ -1,18 +1,26 @@
 package com.example.pushnotificationsapp.login.presentation
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
-import androidx.compose.material.TextFieldDefaults.outlinedTextFieldColors
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.compose.runtime.livedata.observeAsState
+import com.example.pushnotificationsapp.R
 import com.example.pushnotificationsapp.login.data.models.LoginState
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
     onNavigateToServices: () -> Unit,
@@ -36,15 +44,38 @@ fun LoginScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Text(
+            text = "Iniciar sesión",
+            style = MaterialTheme.typography.headlineLarge,
+            color = customGreen,
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
+        Image(
+            painter = painterResource(id = R.drawable.medjob),
+            contentDescription = "Login illustration",
+            modifier = Modifier
+                .height(120.dp)
+                .padding(bottom = 16.dp)
+        )
         OutlinedTextField(
             value = email,
             onValueChange = { viewModel.onEmailChange(it) },
             label = { Text("Correo electrónico") },
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Email,
+                    contentDescription = "Correo electrónico",
+                    tint = customGreen
+                )
+            },
             modifier = Modifier.fillMaxWidth(),
-            colors = outlinedTextFieldColors(
+            colors = TextFieldDefaults.outlinedTextFieldColors(
                 focusedBorderColor = customGreen,
                 unfocusedBorderColor = customGreen,
-                focusedLabelColor = customGreen
+                focusedLabelColor = customGreen,
+                unfocusedLabelColor = customGreen,
+                focusedTextColor = Color.Black,
+                unfocusedTextColor = Color.Black
             )
         )
         Spacer(modifier = Modifier.height(8.dp))
@@ -52,29 +83,48 @@ fun LoginScreen(
             value = password,
             onValueChange = { viewModel.onPasswordChange(it) },
             label = { Text("Contraseña") },
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Lock,
+                    contentDescription = "Contraseña",
+                    tint = customGreen
+                )
+            },
             visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier.fillMaxWidth(),
-            colors = outlinedTextFieldColors(
+            colors = TextFieldDefaults.outlinedTextFieldColors(
                 focusedBorderColor = customGreen,
                 unfocusedBorderColor = customGreen,
-                focusedLabelColor = customGreen
+                focusedLabelColor = customGreen,
+                unfocusedLabelColor = customGreen,
+                focusedTextColor = Color.Black,
+                unfocusedTextColor = Color.Black
             )
         )
         Spacer(modifier = Modifier.height(16.dp))
         Button(
             onClick = { viewModel.login() },
             colors = ButtonDefaults.buttonColors(
-                backgroundColor = customGreen
+                containerColor = customGreen
             ),
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Iniciar sesión", color = Color.White)
+            Text(
+                "Iniciar sesión",
+                color = Color.White,
+                fontSize = 16.sp
+            )
         }
         Spacer(modifier = Modifier.height(8.dp))
         TextButton(onClick = onNavigateToRegister) {
-            Text("¿No tienes cuenta? Regístrate", color = customGreen)
+            Text(
+                "¿No tienes cuenta? Regístrate",
+                color = customGreen,
+                fontSize = 16.sp
+            )
         }
         Spacer(modifier = Modifier.height(8.dp))
+
         when (loginState) {
             is LoginState.Loading -> {
                 CircularProgressIndicator(color = customGreen)
@@ -82,13 +132,17 @@ fun LoginScreen(
             is LoginState.Error -> {
                 Text(
                     text = (loginState as LoginState.Error).message,
-                    color = MaterialTheme.colors.error
+                    color = Color(0xFFFF0000),
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold
                 )
             }
             is LoginState.Success -> {
                 Text(
                     text = (loginState as LoginState.Success).message,
-                    color = customGreen
+                    color = customGreen,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold
                 )
             }
             else -> {}

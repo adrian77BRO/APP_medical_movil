@@ -1,18 +1,24 @@
 package com.example.pushnotificationsapp.register.presentation
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
-import androidx.compose.material.TextFieldDefaults.outlinedTextFieldColors
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pushnotificationsapp.register.data.models.RegisterState
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegisterScreen(
     onNavigateBack: () -> Unit,
@@ -20,8 +26,8 @@ fun RegisterScreen(
 ) {
     val customGreen = Color(0xFF3ECF72)
 
-    val fname by viewModel.fname.observeAsState("")
-    val lname by viewModel.lname.observeAsState("")
+    val firstName by viewModel.fname.observeAsState("")
+    val lastName by viewModel.lname.observeAsState("")
     val email by viewModel.email.observeAsState("")
     val password by viewModel.password.observeAsState("")
     val registerState by viewModel.registerState.observeAsState(RegisterState.Idle)
@@ -33,27 +39,53 @@ fun RegisterScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Text(
+            text = "Crear cuenta",
+            style = MaterialTheme.typography.headlineLarge,
+            color = customGreen,
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
         OutlinedTextField(
-            value = fname,
+            value = firstName,
             onValueChange = { viewModel.onFnameChange(it) },
             label = { Text("Nombre(s)") },
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Person,
+                    contentDescription = "Nombre(s)",
+                    tint = customGreen
+                )
+            },
             modifier = Modifier.fillMaxWidth(),
-            colors = outlinedTextFieldColors(
+            colors = TextFieldDefaults.outlinedTextFieldColors(
                 focusedBorderColor = customGreen,
                 unfocusedBorderColor = customGreen,
-                focusedLabelColor = customGreen
+                focusedLabelColor = customGreen,
+                unfocusedLabelColor = customGreen,
+                focusedTextColor = Color.Black,
+                unfocusedTextColor = Color.Black
             )
         )
         Spacer(modifier = Modifier.height(8.dp))
         OutlinedTextField(
-            value = lname,
+            value = lastName,
             onValueChange = { viewModel.onLnameChange(it) },
             label = { Text("Apellidos") },
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Person,
+                    contentDescription = "Apellidos",
+                    tint = customGreen
+                )
+            },
             modifier = Modifier.fillMaxWidth(),
-            colors = outlinedTextFieldColors(
+            colors = TextFieldDefaults.outlinedTextFieldColors(
                 focusedBorderColor = customGreen,
                 unfocusedBorderColor = customGreen,
-                focusedLabelColor = customGreen
+                focusedLabelColor = customGreen,
+                unfocusedLabelColor = customGreen,
+                focusedTextColor = Color.Black,
+                unfocusedTextColor = Color.Black
             )
         )
         Spacer(modifier = Modifier.height(8.dp))
@@ -61,11 +93,21 @@ fun RegisterScreen(
             value = email,
             onValueChange = { viewModel.onEmailChange(it) },
             label = { Text("Correo electrónico") },
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Email,
+                    contentDescription = "Correo electrónico",
+                    tint = customGreen
+                )
+            },
             modifier = Modifier.fillMaxWidth(),
-            colors = outlinedTextFieldColors(
+            colors = TextFieldDefaults.outlinedTextFieldColors(
                 focusedBorderColor = customGreen,
                 unfocusedBorderColor = customGreen,
-                focusedLabelColor = customGreen
+                focusedLabelColor = customGreen,
+                unfocusedLabelColor = customGreen,
+                focusedTextColor = Color.Black,
+                unfocusedTextColor = Color.Black
             )
         )
         Spacer(modifier = Modifier.height(8.dp))
@@ -73,27 +115,45 @@ fun RegisterScreen(
             value = password,
             onValueChange = { viewModel.onPasswordChange(it) },
             label = { Text("Contraseña") },
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Lock,
+                    contentDescription = "Contraseña",
+                    tint = customGreen
+                )
+            },
             visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier.fillMaxWidth(),
-            colors = outlinedTextFieldColors(
+            colors = TextFieldDefaults.outlinedTextFieldColors(
                 focusedBorderColor = customGreen,
                 unfocusedBorderColor = customGreen,
-                focusedLabelColor = customGreen
+                focusedLabelColor = customGreen,
+                unfocusedLabelColor = customGreen,
+                focusedTextColor = Color.Black,
+                unfocusedTextColor = Color.Black
             )
         )
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(16.dp))
         Button(
             onClick = { viewModel.register() },
             colors = ButtonDefaults.buttonColors(
-                backgroundColor = customGreen
+                containerColor = customGreen
             ),
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Registrarse", color = Color.White)
+            Text(
+                "Registrarse",
+                color = Color.White,
+                fontSize = 16.sp
+            )
         }
         Spacer(modifier = Modifier.height(8.dp))
         TextButton(onClick = onNavigateBack) {
-            Text("¿Ya tienes cuenta? Inicia sesión", color = customGreen)
+            Text(
+                "¿Ya tienes cuenta? Inicia sesión",
+                color = customGreen,
+                fontSize = 16.sp
+            )
         }
         Spacer(modifier = Modifier.height(8.dp))
         when (registerState) {
@@ -103,13 +163,17 @@ fun RegisterScreen(
             is RegisterState.Error -> {
                 Text(
                     text = (registerState as RegisterState.Error).message,
-                    color = MaterialTheme.colors.error
+                    color = Color(0xFFFF0000),
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold
                 )
             }
             is RegisterState.Success -> {
                 Text(
                     text = (registerState as RegisterState.Success).message,
-                    color = customGreen
+                    color = customGreen,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold
                 )
             }
             else -> {}
