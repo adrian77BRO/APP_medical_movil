@@ -42,7 +42,6 @@ fun RegisterScreen(
         Text(
             text = "Crear cuenta",
             style = MaterialTheme.typography.headlineLarge,
-            color = customGreen,
             modifier = Modifier.padding(bottom = 16.dp)
         )
         OutlinedTextField(
@@ -61,7 +60,7 @@ fun RegisterScreen(
                 focusedBorderColor = customGreen,
                 unfocusedBorderColor = customGreen,
                 focusedLabelColor = customGreen,
-                unfocusedLabelColor = customGreen,
+                unfocusedLabelColor = Color.Gray,
                 focusedTextColor = Color.Black,
                 unfocusedTextColor = Color.Black
             )
@@ -83,7 +82,7 @@ fun RegisterScreen(
                 focusedBorderColor = customGreen,
                 unfocusedBorderColor = customGreen,
                 focusedLabelColor = customGreen,
-                unfocusedLabelColor = customGreen,
+                unfocusedLabelColor = Color.Gray,
                 focusedTextColor = Color.Black,
                 unfocusedTextColor = Color.Black
             )
@@ -105,7 +104,7 @@ fun RegisterScreen(
                 focusedBorderColor = customGreen,
                 unfocusedBorderColor = customGreen,
                 focusedLabelColor = customGreen,
-                unfocusedLabelColor = customGreen,
+                unfocusedLabelColor = Color.Gray,
                 focusedTextColor = Color.Black,
                 unfocusedTextColor = Color.Black
             )
@@ -128,7 +127,7 @@ fun RegisterScreen(
                 focusedBorderColor = customGreen,
                 unfocusedBorderColor = customGreen,
                 focusedLabelColor = customGreen,
-                unfocusedLabelColor = customGreen,
+                unfocusedLabelColor = Color.Gray,
                 focusedTextColor = Color.Black,
                 unfocusedTextColor = Color.Black
             )
@@ -151,7 +150,7 @@ fun RegisterScreen(
         TextButton(onClick = onNavigateBack) {
             Text(
                 "¿Ya tienes cuenta? Inicia sesión",
-                color = customGreen,
+                color = Color(0xFF0000FF),
                 fontSize = 16.sp
             )
         }
@@ -171,7 +170,7 @@ fun RegisterScreen(
             is RegisterState.Success -> {
                 Text(
                     text = (registerState as RegisterState.Success).message,
-                    color = customGreen,
+                    color = Color(0xFF4CAF50),
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold
                 )

@@ -47,7 +47,6 @@ fun LoginScreen(
         Text(
             text = "Iniciar sesión",
             style = MaterialTheme.typography.headlineLarge,
-            color = customGreen,
             modifier = Modifier.padding(bottom = 16.dp)
         )
         Image(
@@ -73,7 +72,7 @@ fun LoginScreen(
                 focusedBorderColor = customGreen,
                 unfocusedBorderColor = customGreen,
                 focusedLabelColor = customGreen,
-                unfocusedLabelColor = customGreen,
+                unfocusedLabelColor = Color.Gray,
                 focusedTextColor = Color.Black,
                 unfocusedTextColor = Color.Black
             )
@@ -96,7 +95,7 @@ fun LoginScreen(
                 focusedBorderColor = customGreen,
                 unfocusedBorderColor = customGreen,
                 focusedLabelColor = customGreen,
-                unfocusedLabelColor = customGreen,
+                unfocusedLabelColor = Color.Gray,
                 focusedTextColor = Color.Black,
                 unfocusedTextColor = Color.Black
             )
@@ -119,7 +118,7 @@ fun LoginScreen(
         TextButton(onClick = onNavigateToRegister) {
             Text(
                 "¿No tienes cuenta? Regístrate",
-                color = customGreen,
+                color = Color(0xFF0000FF),
                 fontSize = 16.sp
             )
         }
@@ -140,7 +139,7 @@ fun LoginScreen(
             is LoginState.Success -> {
                 Text(
                     text = (loginState as LoginState.Success).message,
-                    color = customGreen,
+                    color = Color(0xFF4CAF50),
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold
                 )

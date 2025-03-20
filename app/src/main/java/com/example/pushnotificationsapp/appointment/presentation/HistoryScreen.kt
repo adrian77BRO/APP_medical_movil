@@ -4,9 +4,9 @@ import android.app.Application
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -19,9 +19,9 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pushnotificationsapp.appointment.data.models.AppointmentState
 import java.text.SimpleDateFormat
-import java.util.Locale
-import java.util.TimeZone
+import java.util.*
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HistoryScreen(
     idJob: Int,
@@ -34,34 +34,61 @@ fun HistoryScreen(
     val appointmentState by viewModel.appointmentState.observeAsState(AppointmentState.Idle)
 
     Scaffold(
+        containerColor = Color.White,
+        topBar = {
+            TopAppBar(
+                title = { Text("Historial de citas") },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color.White,
+                    titleContentColor = Color.Black
+                )
+            )
+        },
         floatingActionButton = {
-            FloatingActionButton(onClick = { onNavigateToReservation(idJob) }) {
-                Icon(imageVector = Icons.Default.Add, contentDescription = "Reservar cita")
+            FloatingActionButton(
+                onClick = { onNavigateToReservation(idJob) },
+                containerColor = Color(0xFF3ECF72)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = "Reservar cita"
+                )
             }
         }
     ) { innerPadding ->
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .padding(innerPadding)) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
             when (appointmentState) {
                 is AppointmentState.Loading -> {
-                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
                         CircularProgressIndicator()
                     }
                 }
                 is AppointmentState.Error -> {
-                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
                         Text(text = (appointmentState as AppointmentState.Error).message)
                     }
                 }
                 is AppointmentState.Success -> {
                     val appointments = (appointmentState as AppointmentState.Success).appointments
                     if (appointments.isEmpty()) {
-                        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
                             Text(
                                 text = "No hay citas reservadas",
-                                color = Color(0xFF777777),
-                                fontSize = 16.sp,
+                                color = Color(0xFF555555),
+                                fontSize = 24.sp,
                                 fontWeight = FontWeight.Bold
                             )
                         }
@@ -72,20 +99,15 @@ fun HistoryScreen(
                                 .padding(16.dp),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            item {
-                                Text(
-                                    text = "Historial de citas",
-                                    style = MaterialTheme.typography.h5,
-                                    modifier = Modifier.padding(24.dp),
-                                    fontWeight = FontWeight.Bold
-                                )
-                            }
                             items(appointments) { appointment ->
-                                Card(
+                                ElevatedCard(
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .padding(vertical = 8.dp),
-                                    elevation = 4.dp
+                                    elevation = CardDefaults.elevatedCardElevation(4.dp),
+                                    colors = CardDefaults.elevatedCardColors(
+                                        containerColor = Color.White
+                                    )
                                 ) {
                                     Column(modifier = Modifier.padding(16.dp)) {
                                         val formattedDate = try {
@@ -98,18 +120,23 @@ fun HistoryScreen(
                                             appointment.date_appoint
                                         }
 
-                                        Text(text = "Fecha: $formattedDate", style = MaterialTheme.typography.subtitle1)
+                                        Text(
+                                            text = "Fecha: $formattedDate",
+                                            style = MaterialTheme.typography.bodyLarge,
+                                            fontWeight = FontWeight.Bold
+                                        )
                                         Spacer(modifier = Modifier.height(6.dp))
                                         Text(text = "Observaciones: ${appointment.observations}")
                                         Spacer(modifier = Modifier.height(6.dp))
+
                                         val statusText = when (appointment.status) {
                                             0 -> "Pendiente"
                                             1 -> "Confirmado"
                                             else -> "Desconocido"
                                         }
                                         val statusColor = when (appointment.status) {
-                                            0 -> Color(0xFFFFC107)
-                                            1 -> Color(0xFF4CAF50)
+                                            0 -> Color(0xFFFFC107) // Amarillo
+                                            1 -> Color(0xFF4CAF50) // Verde
                                             else -> Color.Gray
                                         }
                                         Text(
@@ -127,82 +154,4 @@ fun HistoryScreen(
             }
         }
     }
-
-    /*when (appointmentState) {
-        is AppointmentState.Loading -> {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                CircularProgressIndicator()
-            }
-        }
-        is AppointmentState.Error -> {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text(text = (appointmentState as AppointmentState.Error).message)
-            }
-        }
-        is AppointmentState.Success -> {
-            val appointments = (appointmentState as AppointmentState.Success).appointments
-            if (appointments.isEmpty()) {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text(text = "No hay citas reservadas")
-                }
-            } else {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    item {
-                        Text(
-                            text = "Historial de citas",
-                            style = MaterialTheme.typography.h5,
-                            modifier = Modifier.padding(24.dp),
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-                    items(appointments) { appointment ->
-                        Card(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 8.dp),
-                            elevation = 4.dp
-                        ) {
-                            Column(modifier = Modifier.padding(16.dp)) {
-                                val formattedDate = try {
-                                    val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
-                                    inputFormat.timeZone = TimeZone.getTimeZone("UTC")
-                                    val outputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                                    val parsedDate = inputFormat.parse(appointment.date_appoint)
-                                    outputFormat.format(parsedDate)
-                                } catch (e: Exception) {
-                                    appointment.date_appoint
-                                }
-
-                                Text(text = "Fecha: $formattedDate", style = MaterialTheme.typography.subtitle1)
-                                Spacer(modifier = Modifier.height(6.dp))
-                                Text(text = "Observaciones: ${appointment.observations}")
-                                Spacer(modifier = Modifier.height(6.dp))
-                                val statusText = when (appointment.status) {
-                                    0 -> "Pendiente"
-                                    1 -> "Confirmado"
-                                    else -> "Desconocido"
-                                }
-                                val statusColor = when (appointment.status) {
-                                    0 -> Color(0xFFFFC107)
-                                    1 -> Color(0xFF4CAF50)
-                                    else -> Color.Gray
-                                }
-                                Text(
-                                    text = "Estatus: $statusText",
-                                    color = statusColor,
-                                    fontWeight = FontWeight.Bold
-                                )
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        else -> {}
-    }*/
 }
