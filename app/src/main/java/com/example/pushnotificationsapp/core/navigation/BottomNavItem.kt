@@ -1,7 +1,7 @@
 package com.example.pushnotificationsapp.core.navigation
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Face
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.ui.graphics.vector.ImageVector
 
@@ -13,5 +13,5 @@ data class BottomNavItem(
 
 val bottomNavItems = listOf(
     BottomNavItem("jobs", "Servicios", Icons.Default.Home),
-    BottomNavItem("steps", "Contador", Icons.Default.Face)
+    BottomNavItem("step_journey", "Podómetro", Icons.Default.Favorite)
 )

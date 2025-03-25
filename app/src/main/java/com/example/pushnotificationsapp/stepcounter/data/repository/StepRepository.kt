@@ -1,14 +1,14 @@
 package com.example.pushnotificationsapp.stepcounter.data.repository
 
-import com.example.pushnotificationsapp.stepcounter.data.datasource.StepDAO
-import com.example.pushnotificationsapp.stepcounter.data.models.Step
+import com.example.pushnotificationsapp.stepcounter.data.datasource.JourneyDAO
+import com.example.pushnotificationsapp.stepcounter.data.models.Journey
 
-class StepRepository(private val stepDAO: StepDAO) {
-    suspend fun insertStep(stepData: Step) {
-        stepDAO.insertJourney(stepData)
+class StepRepository(private val journeyDAO: JourneyDAO) {
+    suspend fun insertStep(stepData: Journey) {
+        journeyDAO.insertJourney(stepData)
     }
 
-    suspend fun getAllSteps(): List<Step> {
-        return stepDAO.getAllJourneys()
+    suspend fun getAllSteps(): List<Journey> {
+        return journeyDAO.getAllJourneys()
     }
 }

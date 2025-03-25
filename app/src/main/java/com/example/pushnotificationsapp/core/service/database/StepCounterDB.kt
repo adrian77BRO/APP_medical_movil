@@ -4,22 +4,22 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.pushnotificationsapp.stepcounter.data.datasource.StepDAO
-import com.example.pushnotificationsapp.stepcounter.data.models.Step
+import com.example.pushnotificationsapp.stepcounter.data.datasource.JourneyDAO
+import com.example.pushnotificationsapp.stepcounter.data.models.Journey
 
-@Database(entities = [Step::class], version = 2)
-abstract class StepDB : RoomDatabase() {
-    abstract fun stepDAO(): StepDAO
+@Database(entities = [Journey::class], version = 3)
+abstract class StepCounterDB : RoomDatabase() {
+    abstract fun journeyDAO(): JourneyDAO
 
     companion object {
         @Volatile
-        private var INSTANCE: StepDB? = null
+        private var INSTANCE: StepCounterDB? = null
 
-        fun getInstance(context: Context): StepDB {
+        fun getInstance(context: Context): StepCounterDB {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    StepDB::class.java,
+                    StepCounterDB::class.java,
                     "steps_db"
                 )
                     .fallbackToDestructiveMigration()

@@ -17,12 +17,13 @@ import com.example.pushnotificationsapp.appointment.presentation.HistoryScreen
 import com.example.pushnotificationsapp.job.presentation.ListJobsScreen
 import com.example.pushnotificationsapp.login.presentation.LoginScreen
 import com.example.pushnotificationsapp.register.presentation.RegisterScreen
-import com.example.pushnotificationsapp.stepcounter.presentation.StepCountScreen
+import com.example.pushnotificationsapp.stepcounter.presentation.StepHistoryScreen
+import com.example.pushnotificationsapp.stepcounter.presentation.StepJourneyScreen
 
 @Composable
 fun AppNavigation(navController: NavHostController = rememberNavController()) {
     val route = currentRoute(navController)
-    val showBottomBar = route in listOf("jobs", "steps")
+    val showBottomBar = route in listOf("jobs", "step_journey")
 
     Scaffold(
         containerColor = Color.White,
@@ -107,8 +108,11 @@ fun AppNavigation(navController: NavHostController = rememberNavController()) {
                     onNavigateBack = { navController.popBackStack() }
                 )
             }
-            composable("steps") {
-                StepCountScreen()
+            composable("step_journey") {
+                StepJourneyScreen(navController = navController)
+            }
+            composable("step_history") {
+                StepHistoryScreen()
             }
         }
     }
@@ -119,46 +123,3 @@ fun currentRoute(navController: NavController): String? {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     return navBackStackEntry?.destination?.route
 }
-
-/*@Composable
-fun AppNavigation(navController: NavHostController = rememberNavController()) {
-    NavHost(navController = navController, startDestination = "login") {
-        composable("login") {
-            LoginScreen(
-                onNavigateToServices = { navController.navigate("jobs") {
-                    popUpTo("login") { inclusive = true }
-                } },
-                onNavigateToRegister = { navController.navigate("register") }
-            )
-        }
-        composable("register") {
-            RegisterScreen(
-                onNavigateBack = { navController.popBackStack() }
-            )
-        }
-        composable("jobs") {
-            ListJobsScreen(onNavigateToHistory = { idJob ->
-                navController.navigate("history/$idJob")
-            })
-        }
-        composable("history/{idJob}") { backStackEntry ->
-            val idJob = backStackEntry.arguments?.getString("idJob")?.toIntOrNull() ?: 0
-            HistoryScreen(
-                idJob = idJob,
-                onNavigateToReservation = { id ->
-                    navController.navigate("reserve/$id")
-                }
-            )
-        }
-        composable("reserve/{idJob}") { backStackEntry ->
-            val idJob = backStackEntry.arguments?.getString("idJob")?.toIntOrNull() ?: 0
-            FormScreen(
-                idJob = idJob,
-                onReservationSuccess = {
-                    navController.popBackStack()
-                },
-                onNavigateBack = { navController.popBackStack() }
-            )
-        }
-    }
-}*/
